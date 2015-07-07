@@ -1,6 +1,6 @@
 @extends('app');
 
-@section('pagetitle')
+@section('tittle')
     User List
 @stop
 
@@ -12,7 +12,7 @@
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th>E-Mail</th>
+        <th>E.Mail</th>
         <th>Actions</th>
     </tr>
     </thead>
