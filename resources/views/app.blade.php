@@ -7,7 +7,7 @@
     <body>
         <div class="container">
 
-            <!-- Navigation Menu --!>
+            <!-- Navigation Menu -->
             <nav class="navbar navbar-inverse">
                 <a class="navbar-brand" href="#">Binary Library</a>
                 <ul class="nav navbar-nav">
@@ -18,14 +18,14 @@
                 </ul>
             </nav>
 
-            <h2> @yield('pagetitle') </h2>
+            <h2> @yield('tittle') </h2>
 
-            <!-- Message Block --!>
+            <!-- Message Block -->
             @if(Session::has('message'))
                 <div class="alert alert-info">{{ Session::get('message') }}</div>
             @endif
 
-            <!-- Main Content --!>
+            <!-- Main Content -->
             <div class="content">
                 @yield('content')
             </div>

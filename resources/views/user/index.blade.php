@@ -28,6 +28,12 @@
                     <a href="{{ URL::to('users/' . $user->id) }}" class="btn btn-success">Show</a>
                     <a href="{{ URL::to('users/' . $user->id . '/edit') }}" class="btn btn-info">Edit</a>
                     <a href="{{ URL::to('users/' . $user->id . '/books') }}" class="btn btn-warning">Have Books</a>
+
+                    {!! Form::open( ['url' => 'users/'. $user->id, 'class' => 'pull-right'] ) !!}
+                    {!! Form::hidden('_method', 'DELETE') !!}
+                    {!! Form::submit('Delete this User', ['class' => 'btn btn-danger btn-xs']) !!}
+                    {!! Form::close() !!}
+
                 </td>
             </tr>
         @endforeach

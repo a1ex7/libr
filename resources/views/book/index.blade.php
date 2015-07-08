@@ -1,6 +1,6 @@
 @extends('app');
 
-@section('pagetitle')
+@section('tittle')
     Books List
 @stop
 

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 use App\User;
 
@@ -30,7 +33,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return 'form for creating a new resource';
+        return view('user/create');
     }
 
     /**
@@ -38,9 +41,38 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        return 'Store a newly created resource in storage';
+
+        $rules = array(
+            'firstname' => 'required|alpha',
+            'lastname' => 'required|alpha',
+            'email' => 'required|email|unique:users',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+
+            return Redirect::to('users/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        else {
+
+            $user = new User();
+
+            $user->firstname = $request->firstname;
+            $user->lastname = $request->lastname;
+            $user->email = $request->email;
+
+            $user->save();
+
+            Session::flash('message', 'New User successfully created');
+
+            return Redirect::to('users');
+
+        }
     }
 
     /**
@@ -51,7 +83,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return 'Display the specified resource';
+        $user = User::find($id);
+        return view('user/show', ['user' => $user]);
     }
 
     /**
@@ -62,7 +95,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return 'Show the form for editing the specified resource';
+        $user = User::find($id);
+        return view('user/edit', ['user' => $user]);
     }
 
     /**
@@ -71,9 +105,37 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        return 'Update the specified resource in storage';
+        $rules = array(
+            'firstname' => 'required|alpha',
+            'lastname' => 'required|alpha',
+            'email' => 'required|email',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+
+            return Redirect::to('users/' . $id . '/edit')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        else {
+
+            $user = User::find($id);
+
+            $user->firstname = $request->firstname;
+            $user->lastname = $request->lastname;
+            $user->email = $request->email;
+
+            $user->save();
+
+            Session::flash('message', 'New User successfully updated');
+
+            return Redirect::to('users');
+
+        }
     }
 
     /**
@@ -84,6 +146,11 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return 'Remove the specified resource from storage';
+        $user = User::find($id);
+        $user->delete();
+
+        Session::flash('message', 'Deleted User with ID: ' . $id);
+
+        return Redirect::to('users');
     }
 }
