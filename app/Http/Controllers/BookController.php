@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 use App\Book;
 
@@ -30,7 +33,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('book/create');
     }
 
     /**
@@ -38,9 +41,40 @@ class BookController extends Controller
      *
      * @return Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        //
+
+        $rules = array(
+            'title' => 'required',
+            'author' => 'required|alpha',
+            'year' => 'required|numeric',
+            'genre' => 'required|alpha',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+
+            return Redirect::to('books/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        else {
+
+            $book = new Book();
+
+            $book->title = $request->title;
+            $book->author = $request->author;
+            $book->year = $request->year;
+            $book->genre = $request->genre;
+
+            $book->save();
+
+            Session::flash('message', 'New book successfully created');
+
+            return Redirect::to('books');
+
+        }
     }
 
     /**
@@ -51,7 +85,8 @@ class BookController extends Controller
      */
     public function show($id)
     {
-        //
+        $book = Book::find($id);
+        return view('book/show', ['book' => $book]);
     }
 
     /**
@@ -62,7 +97,8 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //
+        $book = Book::find($id);
+        return view('book/edit', ['book' => $book]);
     }
 
     /**
@@ -71,9 +107,39 @@ class BookController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'title' => 'required',
+            'author' => 'required|alpha',
+            'year' => 'required|numeric',
+            'genre' => 'required|alpha',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+
+            return Redirect::to('books/' . $id . '/edit')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        else {
+
+            $book = Book::find($id);
+
+            $book->title = $request->title;
+            $book->author = $request->author;
+            $book->year = $request->year;
+            $book->genre = $request->genre;
+
+            $book->save();
+
+            Session::flash('message', 'New book successfully updated');
+
+            return Redirect::to('books');
+
+        }
     }
 
     /**
@@ -84,6 +150,11 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $book = Book::find($id);
+        $book->delete();
+
+        Session::flash('message', 'Deleted Book with ID: ' . $id);
+
+        return Redirect::to('books');
     }
 }
