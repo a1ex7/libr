@@ -25,7 +25,12 @@
                 <td>
                     <a href="{{ URL::to('users/' . $user->id) }}" class="btn btn-success">Show</a>
                     <a href="{{ URL::to('users/' . $user->id . '/edit') }}" class="btn btn-info">Edit</a>
-                    <a href="{{ URL::to('users/' . $user->id . '/books') }}" class="btn btn-warning">Have Books</a>
+
+                    @if ( count($user->books) > 0)
+                        <a href="{{ URL::to('users/' . $user->id . '/books') }}" class="btn btn-warning">
+                            Have {{ count($user->books) }} books
+                        </a>
+                    @endif
 
                     {!! Form::open( ['url' => 'users/'. $user->id, 'class' => 'pull-right'] ) !!}
                     {!! Form::hidden('_method', 'DELETE') !!}

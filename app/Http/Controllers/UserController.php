@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use App\User;
+use App\Book;
 
 
 class UserController extends Controller
@@ -22,7 +23,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::with('books')->paginate(10);
+
+//        var_dump($users);
 
         return view('user/index', ['users'=>$users]);
     }

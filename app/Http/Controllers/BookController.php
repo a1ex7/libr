@@ -9,8 +9,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent;
+use Illuminate\Support\Facades\DB;
 
 use App\Book;
+use App\User;
 
 class BookController extends Controller
 {
@@ -156,5 +159,29 @@ class BookController extends Controller
         Session::flash('message', 'Deleted Book with ID: ' . $id);
 
         return Redirect::to('books');
+    }
+
+    /**
+     * Display a listing of the Books for User with ID.
+     *
+     * @return Response
+     */
+    public function usersBooks($id)
+    {
+        $books = User::find($id)->books()->get();
+
+        return view('book/usersBooks', ['books'=>$books, 'user_id' =>$id]);
+    }
+
+    public function returnBook($uid, $bid)
+    {
+        $returned = DB::table('users_books')->where('user_id', $uid)->where('book_id', $bid);
+        $returned->delete();
+
+        Session::flash(
+            'message', 'Returned book with ID: ' . $bid . ' from user with ID: ' . $uid
+        );
+
+        return Redirect::to('users/' . $uid . '/books');
     }
 }
