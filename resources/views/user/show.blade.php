@@ -1,8 +1,6 @@
-@extends('app');
+@extends('app')
 
-@section('tittle')
-    Show User
-@stop
+@section('tittle', 'Show User')
 
 @section('content')
 

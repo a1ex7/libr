@@ -1,8 +1,7 @@
-@extends('app');
+@extends('app')
 
-@section('tittle')
-    Create User
-@stop
+@section('tittle', 'Create User')
+
 
 @section('content')
 

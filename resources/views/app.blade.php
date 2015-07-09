@@ -2,8 +2,9 @@
 <html>
     <head>
         <title>@yield('tittle')</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        {!! HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css') !!}
     </head>
+
     <body>
         <div class="container">
 
@@ -30,5 +31,5 @@
                 @yield('content')
             </div>
         </div>
-        </body>
+    </body>
 </html>

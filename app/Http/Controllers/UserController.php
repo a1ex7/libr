@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\User;
 
+
 class UserController extends Controller
 {
     /**
