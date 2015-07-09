@@ -31,5 +31,19 @@
         </div>
     </div>
 
+    @if (count($books))
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Have Books:</h3>
+        </div>
+        <div class="panel-body">
+            @foreach($books as $book)
+                {{ $book->title }} {{ $book->author }} ({{ $book->year }})
+                <br />
+            @endforeach
+        </div>
+    </div>
+    @endif
+
 
 @stop

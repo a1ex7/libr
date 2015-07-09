@@ -184,4 +184,30 @@ class BookController extends Controller
 
         return Redirect::to('users/' . $uid . '/books');
     }
+
+    /**
+     * Display a listing of the Books witch adding to user with id.
+     *
+     * @return Response
+     */
+    public function listAddingBook($user_id)
+    {
+        $books = Book::paginate(10);
+
+        return view('book/index', ['books'=>$books, 'user_id'=>$user_id]);
+    }
+
+    public function addBook($uid, $bid)
+    {
+        DB::table('users_books')->insert(
+            ['user_id' => $uid, 'book_id' => $bid]
+        );
+
+
+        Session::flash(
+            'message', 'Book with ID: ' . $bid . ' successfully add to user with ID: ' . $uid
+        );
+
+        return Redirect::to('books/users/' . $uid);
+    }
 }

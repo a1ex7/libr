@@ -22,19 +22,20 @@
                 <td>{{ $user->lastname }}</td>
                 <td>{{ $user->email }}</td>
 
-                <td>
-                    <a href="{{ URL::to('users/' . $user->id) }}" class="btn btn-success">Show</a>
-                    <a href="{{ URL::to('users/' . $user->id . '/edit') }}" class="btn btn-info">Edit</a>
+                <td width="450">
+                    <a href="{{ URL::to('users/' . $user->id) }}" class="btn btn-success btn-sm">Show</a>
+                    <a href="{{ URL::to('users/' . $user->id . '/edit') }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ URL::to('books/users/'. $user->id) }}" class="btn btn-primary btn-sm">Add book</a>
 
                     @if ( count($user->books) > 0)
-                        <a href="{{ URL::to('users/' . $user->id . '/books') }}" class="btn btn-warning">
+                        <a href="{{ URL::to('users/' . $user->id . '/books') }}" class="btn btn-warning btn-sm">
                             Have {{ count($user->books) }} books
                         </a>
                     @endif
 
                     {!! Form::open( ['url' => 'users/'. $user->id, 'class' => 'pull-right'] ) !!}
                     {!! Form::hidden('_method', 'DELETE') !!}
-                    {!! Form::submit('Delete this User', ['class' => 'btn btn-danger btn-xs']) !!}
+                    {!! Form::submit('Delete this User', ['class' => 'btn btn-danger btn-sm']) !!}
                     {!! Form::close() !!}
 
                 </td>

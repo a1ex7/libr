@@ -25,13 +25,13 @@
                 <td>{{ $book->genre }}</td>
 
                 <td>
-                    <a href="{{ URL::to('books/' . $book->id) }}" class="btn btn-success">Show</a>
-                    <a href="{{ URL::to('books/' . $book->id . '/edit') }}" class="btn btn-info">Edit</a>
-                    <a href="{{ URL::to('books/' . $book->id . '/users') }}" class="btn btn-warning">Add to User</a>
+                    <a href="{{ URL::to('books/' . $book->id) }}" class="btn btn-success btn-sm">Show</a>
+                    <a href="{{ URL::to('books/' . $book->id . '/edit') }}" class="btn btn-info btn-sm">Edit</a>
+                    <a href="{{ URL::to('users/' . $user_id . '/books/' . $book->id) }}" class="btn btn-warning btn-sm">Add to User</a>
 
                     {!! Form::open( ['url' => 'books/'. $book->id, 'class' => 'pull-right'] ) !!}
                     {!! Form::hidden('_method', 'DELETE') !!}
-                    {!! Form::submit('Delete this Book', ['class' => 'btn btn-danger btn-xs']) !!}
+                    {!! Form::submit('Delete this Book', ['class' => 'btn btn-danger btn-sm']) !!}
                     {!! Form::close() !!}
 
                 </td>
