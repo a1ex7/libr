@@ -20,7 +20,7 @@ Route::resource('users', 'UserController');
 Route::resource('books', 'BookController');
 
 // Route for list of book which having some user with id
-Route::get('users/{id}/books', 'BookController@usersBooks');
+Route::get('users/{id}/books', 'BookController@usersbooks');
 
 // Route for returning the book
 Route::delete('users/{uid}/books/{bid}', 'BookController@returnBook');

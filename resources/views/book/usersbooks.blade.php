@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('tittle', 'Books List')
+@section('tittle', 'Books List for User with ID: ' . $user_id)
 
 @section('content')
 
@@ -28,13 +28,11 @@
                     <a href="{{ URL::to('books/' . $book->id) }}" class="btn btn-success btn-sm">Show</a>
                     <a href="{{ URL::to('books/' . $book->id . '/edit') }}" class="btn btn-info btn-sm">Edit</a>
 
-                    @if (isset($user_id) && !empty($user_id))
-                        <a href="{{ URL::to('users/' . $user_id . '/books/' . $book->id) }}" class="btn btn-warning btn-sm">Add to User</a>
-                    @endif
-
-                    {!! Form::open( ['url' => 'books/'. $book->id, 'class' => 'pull-right'] ) !!}
+                    {!! Form::open(
+                        ['url' => 'users/'. $user_id . '/books/' . $book->id, 'class' => 'pull-right']
+                    ) !!}
                     {!! Form::hidden('_method', 'DELETE') !!}
-                    {!! Form::submit('Delete this Book', ['class' => 'btn btn-danger btn-sm']) !!}
+                    {!! Form::submit('Return the book', ['class' => 'btn btn-danger btn-sm']) !!}
                     {!! Form::close() !!}
 
                 </td>
@@ -42,7 +40,5 @@
         @endforeach
         </tbody>
     </table>
-
-    {!! $books->render() !!}
 
 @stop

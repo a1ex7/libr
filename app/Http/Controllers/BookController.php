@@ -170,9 +170,16 @@ class BookController extends Controller
     {
         $books = User::find($id)->books()->get();
 
-        return view('book/usersBooks', ['books'=>$books, 'user_id' =>$id]);
+        return view('book/usersBooks', ['books'=>$books, 'user_id' => $id]);
     }
 
+    /**
+     * Remove the specified resource from storage
+     *
+     * @param $uid user id which returned the book
+     * @param $bid book id which returned by user
+     * @return Response
+     */
     public function returnBook($uid, $bid)
     {
         $returned = DB::table('users_books')->where('user_id', $uid)->where('book_id', $bid);
@@ -186,7 +193,7 @@ class BookController extends Controller
     }
 
     /**
-     * Display a listing of the Books witch adding to user with id.
+     * Display a listing of the Books which adding to user with id.
      *
      * @return Response
      */
@@ -197,12 +204,18 @@ class BookController extends Controller
         return view('book/index', ['books'=>$books, 'user_id'=>$user_id]);
     }
 
+    /**
+     * Add book to user with id
+     *
+     * @param $uid
+     * @param $bid
+     * @return Response
+     */
     public function addBook($uid, $bid)
     {
         DB::table('users_books')->insert(
             ['user_id' => $uid, 'book_id' => $bid]
         );
-
 
         Session::flash(
             'message', 'Book with ID: ' . $bid . ' successfully add to user with ID: ' . $uid
