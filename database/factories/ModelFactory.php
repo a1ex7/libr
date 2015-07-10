@@ -22,8 +22,8 @@ $factory->define(App\User::class, function ($faker) {
 $factory->define(App\Book::class, function ($faker) {
     return [
         'title' => $faker->text(30),
-        'author' => $faker->firstName . ' ' . $faker->lastName,
+        'author' => $faker->lastName,
         'year' => $faker->numberBetween(1996, 2015),
-        'genre' => $faker->randomElement(['history', 'roman', 'detective', 'popular']),
+        'genre' => $faker->randomElement(['History', 'Romance', 'Crime', 'Fiction', 'Poetry']),
     ];
 });
