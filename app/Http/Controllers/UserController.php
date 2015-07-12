@@ -25,8 +25,6 @@ class UserController extends Controller
     {
         $users = User::with('books')->paginate(10);
 
-//        var_dump($users);
-
         return view('user/index', ['users'=>$users]);
     }
 

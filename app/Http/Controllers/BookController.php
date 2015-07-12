@@ -168,7 +168,7 @@ class BookController extends Controller
      */
     public function usersBooks($id)
     {
-        $books = User::find($id)->books()->get();
+        $books = User::find($id)->books()->paginate(10);
 
         return view('book/usersBooks', ['books'=>$books, 'user_id' => $id]);
     }
