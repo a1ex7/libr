@@ -182,8 +182,11 @@ class BookController extends Controller
      */
     public function returnBook($uid, $bid)
     {
-        $returned = DB::table('users_books')->where('user_id', $uid)->where('book_id', $bid);
-        $returned->delete();
+
+        $user = User::find($uid);
+        $book = Book::find($bid);
+
+        $user->books()->detach($book);
 
         Session::flash(
             'message', 'Returned book with ID: ' . $bid . ' from user with ID: ' . $uid
@@ -213,9 +216,11 @@ class BookController extends Controller
      */
     public function addBook($uid, $bid)
     {
-        DB::table('users_books')->insert(
-            ['user_id' => $uid, 'book_id' => $bid]
-        );
+
+        $user = User::find($uid);
+        $book = Book::find($bid);
+
+        $user->books()->save($book);
 
         Session::flash(
             'message', 'Book with ID: ' . $bid . ' successfully add to user with ID: ' . $uid
